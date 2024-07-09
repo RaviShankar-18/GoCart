@@ -10,8 +10,6 @@ const productListSlice = createSlice({
   initialState,
   reducers: {
     getProductList: (state, action) => {
-      console.log("State", state);
-      console.log("Action", action);
       state.isLoading = true;
       state.data = null;
       state.error = null;

@@ -1,9 +1,10 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { loadCartData, removeFromCart } from "./Cart.Slice";
 import EmptyCartImageAVIF from "../../../assets/empty-cart-background.avif";
+import { loadCartData, removeFromCart } from "./Cart.Slice";
 
 const CartLayout = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,50 @@ const CartLayout = () => {
     },
     0
   );
+
+  const checkoutHandler = async (amount) => {
+    try {
+      const {
+        data: { key },
+      } = await axios.get("http://localhost:4000/api/getkey");
+
+      const {
+        data: { order },
+      } = await axios.post("http://localhost:4000/api/checkout", { amount });
+
+      const options = {
+        key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Ravi Shankar Kumar",
+        description: "RazorPay payment integration",
+        image: "https://avatars.githubusercontent.com/u/121035835?v=4",
+        order_id: order.id,
+        callback_url: "http://localhost:4000/api/paymentverification",
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#121212",
+        },
+      };
+
+      // Ensure Razorpay is available
+      if (window.Razorpay) {
+        const razor = new window.Razorpay(options);
+        razor.open();
+      } else {
+        console.error("Razorpay SDK not loaded");
+      }
+    } catch (error) {
+      console.error("Error in checkoutHandler:", error);
+    }
+  };
 
   const onClickDelete = (id) => {
     dispatch(removeFromCart({ id }));
@@ -90,6 +135,11 @@ const CartLayout = () => {
                 </PriceItem>
               ))}
               <TotalPrice>Total Amount ${totalPrice.toFixed(2)}</TotalPrice>
+              <PlaceOrderButton
+                onClick={() => checkoutHandler(Math.round(totalPrice))}
+              >
+                Place Order
+              </PlaceOrderButton>
             </CartSummary>
           </CartContent>
         )}
@@ -242,12 +292,26 @@ const SummaryTitle = styled.h3`
 const PriceItem = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
 `;
 
-const TotalPrice = styled.div`
-  font-weight: bold;
+const TotalPrice = styled.h4`
   font-size: 20px;
-  margin-top: 10px;
-  text-align: right;
+  margin-top: 20px;
+`;
+
+const PlaceOrderButton = styled.button`
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;

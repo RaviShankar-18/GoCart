@@ -5,7 +5,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 import Navbar from "../../../components/header/Navbar";
 import { getProductList } from "./ProductList.Slice";
-import Footer from "../../../components/footer/Footer";
 import { loadCartData } from "../Cart/Cart.Slice";
 
 const ProductListing = () => {
@@ -13,11 +12,11 @@ const ProductListing = () => {
   const [searchQuery, setSearchQuery] = useState("");
   let debounceTimer;
   const [brand, setBrand] = useState([
-    { name: "Apple", checked: false },
-    { name: "Samsung", checked: false },
-    { name: "OPPO", checked: false },
-    { name: "HP Pavilion", checked: false },
-    { name: "Microsoft Surface", checked: false },
+    { name: "Essence", checked: false },
+    { name: "Glamour Beauty", checked: false },
+    { name: "Velvet Touch", checked: false },
+    { name: "Nail Couture", checked: false },
+    { name: "Calvin Klein", checked: false },
   ]);
   const [rating, setRating] = useState([
     { name: "4.5★ & above", checked: false },
@@ -200,7 +199,7 @@ const ProductListing = () => {
             <LoaderContainer>
               <ClipLoader
                 loading={isLoading}
-                size={150}
+                size={100}
                 aria-label="Loading Spinner"
                 data-testid="loader"
               />
@@ -210,7 +209,7 @@ const ProductListing = () => {
               {data &&
                 filteredProducts.map((product) => (
                   <ProductCard key={product.id}>
-                    <Link to={`/view-product/${product.id}`}>
+                    <StyledLink to={`/view-product/${product.id}`}>
                       <ProductImageWrapper>
                         <ProductImage
                           src={product.thumbnail}
@@ -227,15 +226,13 @@ const ProductListing = () => {
                           <span>★</span>
                         </ProductRating>
                       </ProductInfo>
-                    </Link>
+                    </StyledLink>
                   </ProductCard>
                 ))}
             </>
           )}
         </ProductList>
       </ProductContainer>
-
-      <Footer></Footer>
     </>
   );
 };
@@ -291,6 +288,11 @@ const ProductCard = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const ProductImageWrapper = styled.div`
   width: 100%;
   height: 200px;
@@ -322,18 +324,14 @@ const ProductRating = styled.div`
   color: #ffffff;
   background-color: #4caf50;
   padding: 3px 6px;
-  border-radius: 4px;
+  border-radius: 5px;
   display: inline-flex;
   align-items: center;
-  margin-bottom: 8px;
-
-  span {
-    margin-left: 5px;
-  }
+  justify-content: center;
+  margin-bottom: 10px; /* Added margin-bottom */
 `;
 
-const ProductPrice = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  color: #007bff;
+const ProductPrice = styled.span`
+  font-size: 14px;
+  color: #666;
 `;
