@@ -13,7 +13,7 @@ const Search = ({ handleSearch }) => {
       <SearchIcon />
       <Input
         type="text"
-        placeholder="Search for products, brands and more"
+        placeholder="Search for essence, velvet and calvin"
         onChange={handleChange}
       />
     </SearchContainer>
