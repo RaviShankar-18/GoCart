@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Navbar from "../../../components/header/Navbar";
 import { getProductList } from "./ProductList.Slice";
 import Footer from "../../../components/footer/Footer";
+import { loadCartData } from "../Cart/Cart.Slice";
 
 const ProductListing = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,13 @@ const ProductListing = () => {
     { name: "10% or more", checked: false },
     { name: "5% or more", checked: false },
   ]);
+
+  const cartData = useSelector((state) => state.cartProducts.data);
+  console.log("CartData", cartData);
+
+  useEffect(() => {
+    dispatch(loadCartData());
+  }, [dispatch]);
 
   const { isLoading, data } = useSelector((state) => state.productListing);
 

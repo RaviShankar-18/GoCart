@@ -162,10 +162,12 @@ const ProductDetails = () => {
               </ActionButton>
             </StyledLink>
           ) : (
-            <ActionButton onClick={onClickAddToCart}>
-              <FaShoppingCart />
-              Add To Cart
-            </ActionButton>
+            <StyledLink to="/cart">
+              <ActionButton onClick={onClickAddToCart}>
+                <FaShoppingCart />
+                Add To Cart
+              </ActionButton>
+            </StyledLink>
           )}
         </DetailsWrapper>
       </Container>

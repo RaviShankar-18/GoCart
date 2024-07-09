@@ -1,7 +1,7 @@
-import { HiOutlineShoppingCart } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./Search";
+import CartIcon from "./CartIcon";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -19,16 +19,16 @@ const Logo = styled(Link)`
   color: #ffe500;
 `;
 
-const CartIcon = styled(Link)`
-  font-size: 24px;
-  background-color: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-`;
+// const CartIcon = styled(Link)`
+//   font-size: 24px;
+//   background-color: transparent;
+//   border: none;
+//   color: #ffffff;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   text-decoration: none;
+// `;
 
 const HeaderInnerContainer = styled.div`
   width: 70%;
@@ -45,10 +45,11 @@ const Navbar = ({ handleSearch }) => {
       <HeaderInnerContainer>
         <Logo to="/">GoCart</Logo>
         <Search handleSearch={handleSearch} />
-        <CartIcon to="/cart">
+        {/* <CartIcon to="/cart">
           <HiOutlineShoppingCart />
           <span> Cart</span>
-        </CartIcon>
+        </CartIcon> */}
+        <CartIcon />
       </HeaderInnerContainer>
     </HeaderContainer>
   );
