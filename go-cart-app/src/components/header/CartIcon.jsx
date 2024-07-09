@@ -10,34 +10,54 @@ const CartContainer = styled.div`
   display: flex;
   align-items: center;
   text-decoration: none;
+  color: white;
+`;
+
+const IconContainer = styled.div`
+  position: relative;
 `;
 
 const CartBadge = styled.div`
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -8px;
+  right: -8px;
   background-color: red;
   color: white;
   border-radius: 50%;
-  padding: 5px 10px;
+  padding: 4px 8px;
   font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CartText = styled.span`
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline */
+`;
+
+const StyledCartIcon = styled(HiOutlineShoppingCart)`
+  font-size: 24px; /* Increased icon size */
 `;
 
 const CartIcon = () => {
   const dispatch = useDispatch();
-  const cartData = useSelector((state) => state.cartProducts.data); // Correctly access the state
+  const cartData = useSelector((state) => state.cartProducts.data);
 
   useEffect(() => {
-    // Dispatch the loadCartData action when the component mounts
     dispatch(loadCartData());
   }, [dispatch]);
 
   return (
-    <Link to="/cart" style={{ textDecoration: "none", color: "white" }}>
+    <Link to="/cart" style={{ textDecoration: "none" }}>
       <CartContainer>
-        <HiOutlineShoppingCart size={24} />
-        <span> Cart</span>
-        {cartData.length > 0 && <CartBadge>{cartData.length}</CartBadge>}
+        <IconContainer>
+          <StyledCartIcon />
+          {cartData.length > 0 && <CartBadge>{cartData.length}</CartBadge>}
+        </IconContainer>
+        <CartText>Cart</CartText>
       </CartContainer>
     </Link>
   );
